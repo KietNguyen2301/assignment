@@ -1,19 +1,43 @@
 {
-  "posts": [
+  "account":[
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "id":1,
+      "username":"user1",
+      "password":"123456"
+    },
+    {
+      "id":2,
+      "username":"user2",
+      "password":"abcdefg"
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  
+    "user":[
+      {
+       
+        "id": 1,
+        "name": "Kiet",
+        "fullname": "Nguyen Tuan Kiet"
+      },
+      {
+       
+        "id": 2,
+        "name": "Phuc",
+        "fullname": "Nguyen Tran Hoang Phuc"
+      },
+      {
+       
+        "id": 3,
+        "name": "Quang",
+        "fullname": "Nguyen Le Ngoc Quang"
+      },
+      {
+       
+        "id": 1,
+        "name": "Tuan",
+        "fullname": "Nguyen Viet Anh Tuan"
+      }
+    ]
+  
 }
+
