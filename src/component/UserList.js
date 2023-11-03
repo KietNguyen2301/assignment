@@ -1,11 +1,8 @@
-//UserList.js
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUser, updateUser, deleteUser } from './userActions';
-import '../style/UserList.css'; // Import CSS file
-import { USERS } from './data';
-
+import { addUser, updateUser, deleteUser, getAllUsers } from './userActions'; // Import getAllUsers action
+import '../style/UserList.css';
+import api from '../api'; // Import API
 
 const UserList = () => {
   const usersFromStore = useSelector((state) => state.users.users);
@@ -23,73 +20,73 @@ const UserList = () => {
     fullname: '',
   });
 
-
-  const [initialUsers, setInitialUsers] = useState(USERS);
-  const [nextId, setNextId] = useState(USERS.length + 1); // Khởi tạo nextId
-  const [selectedUserId, setSelectedUserId] = useState(null); // State để lưu ID người dùng được chọn
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
-    if (initialUsers.length === 0) {
-      setInitialUsers(USERS);
-    }
-  }, [initialUsers]);
+    fetchUserData();
+    fetchAllUsers(); // Call fetchAllUsers to load all users initially
+  }, []);
 
-  const handleAddUser = () => {
-    const userToAdd = {
-      id: nextId,
-      name: newUser.name,
-      fullname: newUser.fullname,
-    };
-
-    dispatch(addUser(userToAdd));
-
-    // Tăng giá trị của nextId
-    setNextId(nextId + 1);
-
-    setNewUser({
-      id: '',
-      name: '',
-      fullname: '',
-    });
-
-    setNewUser1({
-      id: '',
-      name: '',
-      fullname: '',
-    });
+  const fetchUserData = async () => {
+    const users = await api.getAllUsers();
+    dispatch(updateUser(users));
   };
 
-  const handleUpdateUser = () => {
-    if (selectedUserId) {
-      const userToUpdate = {
-        id: selectedUserId,
-        name: newUser1.name,
-        fullname: newUser1.fullname,
-      };
+  const fetchAllUsers = async () => {
+    const allUsers = await api.getAllUsers();
+    dispatch(getAllUsers(allUsers));
+  };
 
-      dispatch(updateUser(userToUpdate));
+  const handleAddUser = async () => {
+    const { id, name, fullname } = newUser;
+    const addedUser = await api.adduser(id, name, fullname);
 
-      // Reset tên và họ đầy đủ mới sau khi cập nhật
-      setNewUser1({
+    if (addedUser) {
+      dispatch(addUser(addedUser));
+
+      setNewUser({
         id: '',
         name: '',
         fullname: '',
       });
-
-      // Reset selectedUserId
-      setSelectedUserId(null);
     }
   };
 
-  const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId));
+  const handleUpdateUser = async () => {
+    if (selectedUserId) {
+      const { id, name, fullname } = newUser1;
+      const updatedUser = await api.updateuser(selectedUserId, {
+        id,
+        name,
+        fullname,
+      });
+
+      if (updatedUser) {
+        dispatch(updateUser(updatedUser));
+
+        setNewUser1({
+          id: '',
+          name: '',
+          fullname: '',
+        });
+        setSelectedUserId(null);
+      }
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    const deletedUser = await api.deleteuser(userId);
+
+    if (deletedUser) {
+      dispatch(deleteUser(userId));
+    }
   };
 
   return (
     <div>
       <h2>User List</h2>
-      <h3>Danh sách ban đầu</h3>
-      <table className="user-table">
+      {/* <h3>Danh sách ban đầu</h3> */}
+      {/* <table className="user-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -99,7 +96,7 @@ const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {initialUsers.map((user) => (
+          {usersFromStore.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.name}</td>
@@ -116,9 +113,9 @@ const UserList = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
 
-      <h3>Danh sách mới</h3>
+      {/* <h3>Danh sách mới</h3> */}
       <table className="user-table">
         <thead>
           <tr>

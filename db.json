@@ -9,30 +9,6 @@
       "id": 2,
       "username": "user2",
       "password": "abcdefg"
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "id": 9
-    },
-    {
-      "id": 10
     }
   ],
   "user": [
@@ -52,19 +28,24 @@
       "fullname": "Nguyen Le Ngoc Quang"
     },
     {
-      "id": 1,
+      "id": 4,
       "name": "Tuan",
       "fullname": "Nguyen Viet Anh Tuan"
     },
     {
-      "name": "mnmnn",
-      "fullname": "mnmnm",
-      "id": 4
+      "id": 5,
+      "name": "Nghia",
+      "fullname": "Nguyen Van Nghia"
     },
     {
-      "name": "user1",
-      "fullname": "123456",
-      "id": 5
+      "id": 6,
+      "name": "Trang",
+      "fullname": "Tran Thi Trang"
+    },
+    {
+      "id": 7,
+      "name": "Hoang",
+      "fullname": "Tran Thai Hoang"
     }
   ]
 }

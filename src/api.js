@@ -10,18 +10,43 @@ const api = {
             throw error;
         }
     },
-    adduser: async (username, password) => {
+    adduser: async (id,name, fullname) => {
         try {
             const response = await axios.post(`${serverport}/user`,
                 {
-                    name: username,
-                    fullname: password
+                    id: id,
+                    name: name,
+                    fullname: fullname
                 }
             );
             return response.data;
         } catch (error) {
             throw error;
         }
-    }
+    },
+     updateuser: async (userId, newData) => {
+        try {
+            const response = await axios.put(`${serverport}/user/${userId}`, newData);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+     deleteuser: async (userId) => {
+        try {
+            const response = await axios.delete(`${serverport}/user/${userId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getAllUsers: async () => {
+        try {
+          const response = await axios.get(`${serverport}/user`);
+          return response.data;
+        } catch (error) {
+          throw error;
+        }
+      }
 }
 export default api;
