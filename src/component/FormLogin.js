@@ -1,23 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('')
   const navigate = useNavigate();
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleLogin();
-    }
-  };
+  // const handleKeyPress = (e) => {
+  //   if (e.key === 'Enter') {
+  //     handleLogin();
+  //   }
+  // };
 
-  const handleLogin = () => {
-    if (username === 'user1' && password === '123456') {
-      localStorage.setItem('isLoggedIn', 'true');
+  const handleLogin = async () => {
+    // if (username === 'user1' && password === '123456') {
+    //   localStorage.setItem('isLoggedIn', 'true');
+    //   navigate('/userlist');
+    // } else {
+    //   alert('Thông tin đăng nhập không đúng');
+    // }
+    const user = await api.login(username, password);
+    console.log(user);
+    if (user) {
       navigate('/userlist');
     } else {
-      alert('Thông tin đăng nhập không đúng');
+      setLoginError('mat khau hoac ten dang nhap sai')
     }
   };
 
@@ -39,9 +48,12 @@ function LoginForm() {
             placeholder="Mật khẩu"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={handleKeyPress}
+
           />
         </div>
+        {loginError && (
+          <p>{loginError}</p>
+        )}
         <div>
           <button onClick={handleLogin}>Đăng nhập</button>
         </div>
